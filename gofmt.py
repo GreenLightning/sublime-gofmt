@@ -183,17 +183,12 @@ class Formatter(object):
                 errors = Error.parse_stderr(stderr, region, self.view)
                 self._show_errors(errors, return_code, cmd)
                 raise FormatterError(errors)
-        self._hide_error_panel()
         return code.decode(self.encoding)
 
     def _clear_errors(self):
         """Clear previously displayed errors."""
         self.view.set_status('gofmt', '')
         self.view.erase_regions('gofmt')
-
-    def _hide_error_panel(self):
-        """Hide any previously displayed error panel."""
-        self.window.run_command('hide_panel', {'panel': 'output.gofmt'})
 
     def _show_errors(self, errors, return_code, cmd):
         """Show errors from a failed command.
