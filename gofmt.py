@@ -188,31 +188,13 @@ class Formatter(object):
     def _clear_errors(self):
         """Clear previously displayed errors."""
         self.view.set_status('gofmt', '')
-        self.view.erase_regions('gofmt')
 
     def _show_errors(self, errors, return_code, cmd):
         """Show errors from a failed command.
-
-        :param int return_code: Exit code of the command.
-        :param str stderr: Stderr output of the command.
-        :param Command cmd: Command object.
-        :param sublime.Region region: Formatted region.
         """
         self.view.set_status('gofmt', '{} failed with return code {}'.format(
             cmd.name, return_code))
         self._show_error_panel(errors)
-        self._show_error_regions(errors)
-
-    def _show_error_regions(self, errors):
-        """Mark the regions which had errors.
-
-        :param str stderr: Stderr output of the command.
-        :param sublime.Region: Formatted region.
-        """
-        self.view.add_regions(
-            'gofmt', [e.region for e in errors], 'invalid.illegal', 'dot',
-            (sublime.DRAW_NO_FILL | sublime.DRAW_NO_OUTLINE |
-             sublime.DRAW_SQUIGGLY_UNDERLINE))
 
     def _show_error_panel(self, errors):
         """Show the stderr of a failed command in an output panel.
